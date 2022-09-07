@@ -1,25 +1,26 @@
-import { useQuery } from "@tanstack/react-query";
+/** @jsxImportSource @emotion/react */
+import { useAppSelector } from "../../app/hooks";
+import { selectCart } from "../../features/cart/cartSlice";
 
+import Header from "../../shared/header";
 import CartList from "./components/cartList";
 
-import createClient from "../../dummy/apis";
+import cartSection from "../../assets/cartSection";
 
 /*
     카트 뷰
 */
 function Cart() {
 
-  const { isLoading, isError, data, error } = useQuery(['cart'], () => {
-    return createClient().Cart.getList();
-  });
-
-  console.log('cart', data)
+  const { datas: cartItems } = useAppSelector(selectCart);
 
   return (
-    <section className="cart" aria-label="cart">
-      카트
-      <CartList/>
-    </section>
+    <>
+      <Header title="cart"/>
+      <section css={cartSection} aria-label="cart-view">
+        <CartList datas={cartItems}/>       
+      </section>
+    </>
   );
 
 }

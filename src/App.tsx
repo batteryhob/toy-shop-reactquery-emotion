@@ -1,11 +1,14 @@
+/** @jsxImportSource @emotion/react */
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import Products from './views/products';
 import Cart from './views/cart';
 
+import appStyle from './assets/appStyle';
+
 function App() {
   return (
-    <div className="App">
+    <div css={appStyle}>
       <BrowserRouter>
         <Routes>
           <Route path='/products' element={<Products />} />

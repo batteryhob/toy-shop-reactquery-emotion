@@ -1,19 +1,20 @@
 /*
     더미 API
 */
-import { productItems, coupons, cart } from "./dummys";
+import { productItemType } from "../types/products.types";
+import { couponType } from "../types/coupons.types";
+import { productItems, coupons } from "./dummys";
 
 const createClient = function () {
   return {
     Products,
-    Coupons,
-    Cart,
+    Coupons
   };
 };
 
 const Products = {
-  getList: function () {
-    return new Promise((resolve, reject) => {
+  getList: function (page: number) {
+    return new Promise<Array<productItemType>>((resolve, reject) => {
       try {
         resolve(productItems);
       } catch {
@@ -25,30 +26,9 @@ const Products = {
 
 const Coupons = {
   getList: function () {
-    return new Promise((resolve, reject) => {
+    return new Promise<Array<couponType>>((resolve, reject) => {
       try {
         resolve(coupons);
-      } catch {
-        reject([]);
-      }
-    });
-  },
-};
-
-const Cart = {
-  getList: function () {
-    return new Promise((resolve, reject) => {
-      try {
-        resolve(cart);
-      } catch {
-        reject([]);
-      }
-    });
-  },
-  add: function () {
-    return new Promise((resolve, reject) => {
-      try {
-        resolve(true);
       } catch {
         reject([]);
       }

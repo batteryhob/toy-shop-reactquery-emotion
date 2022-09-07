@@ -14,6 +14,6 @@ test("카트 페이지가 정상적으로 랜더링 된다.", () => {
     </Provider>
   );
 
-  expect(getByLabelText('cart')).toBeInTheDocument();
+  expect(getByLabelText('cart-view')).toBeInTheDocument();
 });
 

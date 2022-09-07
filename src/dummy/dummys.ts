@@ -1,12 +1,7 @@
+import { productItemType } from "../types/products.types";
+import { couponType } from "../types/coupons.types";
+
 // productItems.js
-interface productItemType {
-  item_no: number,
-  item_name: string,
-  detail_image_url: string,
-  price: number,
-  score: number,
-  availableCoupon?: boolean
-}
 export const productItems: Array<productItemType> = [
   {
     item_no: 122997,
@@ -98,13 +93,6 @@ export const productItems: Array<productItemType> = [
   }
 ];
 
-// coupons.js
-interface couponType {
-  type: string,
-  title: string,
-  discountRate?: number
-  discountAmount?: number
-}
 export const coupons: Array<couponType> = [
   {
     type: 'rate',
@@ -117,6 +105,3 @@ export const coupons: Array<couponType> = [
     discountAmount: 10000,
   }
 ];
-
-// cart.js
-export const cart: Array<productItemType> = []

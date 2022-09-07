@@ -1,15 +1,111 @@
+/** @jsxImportSource @emotion/react */
+import { productItemType } from "../../../types/products.types";
+
+import { css } from "@emotion/react";
+
+import { addComma } from "../../../utils/textUtils";
+import { addCart } from "../../../features/cart/cartSlice";
+import { useDispatch } from "react-redux";
+
+const productItemStyle = css`
+    width: calc(50% - 1px);
+    display: flex;
+    flex-direction: column;
+`;
+
+const thumbnail = css`
+    position: relative;
+    overflow: hidden;    
+    padding-top: 100%;
+    img {
+        width: 100%;
+        position: absolute;
+        left: 0px;
+        top: 0px;
+    }
+`;
+
+const content = css`
+    display: flex;
+    flex-direction: row;
+    padding: 12px;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 14px;
+`;
+
+const contentDesc = css`
+    flex: 1;
+    margin-right: 12px;
+    min-height: 54px;
+     h3 {
+        margin-bottom: 12px;
+        font-weight: 300;
+        font-size: 12px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+    }
+    strong {        
+        font-weight: 700;
+    }
+`
+
+const contentIcon = (isAdded: boolean ) => css`
+    display: flex;
+    align-items: center;
+    button {
+        i {
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            ${isAdded ?
+                `background-image: url('/imgs/remove_shopping_cart_black_24dp.svg');`    
+                :            
+                `background-image: url('/imgs/add_shopping_cart_black_24dp.svg');`
+            }
+            &:hover {
+                filter: invert(86%) sepia(3%) saturate(6%) hue-rotate(322deg) brightness(97%) contrast(86%);
+            }
+        }
+    }
+`
+
 /*
     프로덕트 아이템
 */
-function ProductItem() {
+interface ProductItemProp {
+    data: productItemType
+}
+function ProductItem({ data }: ProductItemProp) {
+
+    const dispatch = useDispatch();
+
+    function handleClick(item: any){
+        dispatch(addCart(item));
+    }
 
     return (
-        <>
-            프로덕트 아이템
-        </>
+        <li css={productItemStyle}>
+            <div css={thumbnail}>
+                <img src={data.detail_image_url} alt={data.item_name} />
+            </div>
+            <div css={content}>
+                <div css={contentDesc}>
+                    <h3>{data.item_name}</h3>
+                    <strong>{`${addComma(data.price)}원`}</strong>
+                </div>
+                <div css={contentIcon(true)}>
+                    <button onClick={()=> handleClick(data)}>
+                        <i></i>
+                    </button>                   
+                </div>
+            </div>
+        </li>
     );
+}
 
-  }
-  
-  export default ProductItem;
+export default ProductItem;
   
