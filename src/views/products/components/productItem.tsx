@@ -88,7 +88,13 @@ function ProductItem({ data }: ProductItemProp) {
     const { datas: cartList }  = useAppSelector(selectCart);
 
     function handleClick(item: any){
-        dispatch(toggleCart(item));
+        if(cartList.length === 3){
+            if(window.confirm("장바구니에는 최대 3개까지 담을 수 있습니다.\n[확인]을 누르시면 가장 오래된 아이템이 장바구니에서 삭제됩니다.")){
+                dispatch(toggleCart(item));
+            }
+        }else{
+            dispatch(toggleCart(item));
+        }        
     }
 
     const included: boolean = cartList.findIndex((cart: cartItemType)=>{
