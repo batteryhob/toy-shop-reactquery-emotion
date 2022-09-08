@@ -5,12 +5,17 @@ import { store } from "../../app/store";
 
 import Products from "./";
 
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+let queryClient = new QueryClient();
+
 test("프로덕트 페이지가 정상적으로 랜더링 된다.", () => {
   const { getByLabelText } = render(
     <Provider store={store}>
-      <Router>
-        <Products />
-      </Router>
+      <QueryClientProvider client={queryClient}>
+        <Router>
+          <Products/>
+        </Router>        
+      </QueryClientProvider>
     </Provider>
   );
 

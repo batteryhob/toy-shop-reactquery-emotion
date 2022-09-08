@@ -33,13 +33,13 @@ export const cartSlice = createSlice({
           state.datas.shift();
           state.datas.push({
             product: action.payload,
-            checked: false,
+            checked: true,
             amount: 1,
           });
         } else {
           state.datas.push({
             product: action.payload,
-            checked: false,
+            checked: true,
             amount: 1,
           });
         }

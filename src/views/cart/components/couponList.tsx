@@ -23,7 +23,7 @@ const couponListStyle = css`
     카트 리스트
 */
 function CouponList() {
-  const { isSuccess, data: coupons } = useQuery<Array<couponType>>(
+  const { data: coupons } = useQuery<Array<couponType>>(
     ["coupons"],
     () => {
       return createClient().Coupons.getList();

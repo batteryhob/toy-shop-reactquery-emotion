@@ -48,7 +48,7 @@ function Cart() {
             </div>
           </>
           :
-          <div css={empty}>
+          <div css={empty} aria-label={`cart-empty`}>
             장바구니가 비었습니다.
           </div>
         }

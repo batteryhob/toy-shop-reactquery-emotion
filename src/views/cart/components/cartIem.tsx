@@ -99,7 +99,7 @@ function CartItem({ data }: CartItemProp) {
   }
 
   return (
-    <li css={cartItemStyle}>
+    <li css={cartItemStyle} aria-label="cart-item">
       <div css={action}>
         <div>
           <Checkbox
@@ -109,13 +109,13 @@ function CartItem({ data }: CartItemProp) {
           />
         </div>
         <div>
-          <button onClick={handleClick}>삭제</button>
+          <button onClick={handleClick} aria-label="cart-item-delete">삭제</button>
         </div>
       </div>
       <div css={cartItemWrapper}>
         <div css={title}>
           {
-            data.product.availableCoupon == false &&
+            data.product.availableCoupon === false &&
             <span css={badge}>쿠폰적용불가</span>
           }          
           <h3>{data.product.item_name}</h3>
