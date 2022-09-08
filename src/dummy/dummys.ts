@@ -23,7 +23,6 @@ export const productItems: Array<productItemType> = [
     detail_image_url: "https://img.29cm.co.kr/next-product/2020/08/05/11ba8acd4ca645729666088309248920_20200805083231.jpg?width=500",
     price: 240000,
     score: 350,
-
   },
   {
     item_no: 1045738,

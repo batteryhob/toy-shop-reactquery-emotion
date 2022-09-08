@@ -73,6 +73,15 @@ const amount = css`
   }
 `;
 
+const badge = css`
+  display: inline-block;
+  padding: 0px 4px;
+  margin-bottom: 3px;
+  background-color: black;
+  color: white;
+  border-radius: 2px;
+`
+
 /*
     카트 아이템
 */
@@ -105,6 +114,10 @@ function CartItem({ data }: CartItemProp) {
       </div>
       <div css={cartItemWrapper}>
         <div css={title}>
+          {
+            data.product.availableCoupon == false &&
+            <span css={badge}>쿠폰적용불가</span>
+          }          
           <h3>{data.product.item_name}</h3>
           <span>{`${addComma(data.product.price)}원`}</span>
           <div css={amount}>

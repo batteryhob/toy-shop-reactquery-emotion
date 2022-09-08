@@ -4,34 +4,55 @@ import CartList from "./components/cartList";
 
 import cartSection from "../../assets/cartSection";
 import CouponList from "./components/couponList";
+import { selectCart, selectCouponApplyPrice } from "../../features/cart/cartSlice";
 import { useAppSelector } from "../../app/hooks";
-import { selectComputedPrice } from "../../features/cart/cartSlice";
 import { addComma } from "../../utils/textUtils";
+import { css } from "@emotion/react";
 
+
+const priceStyle = css`
+  position: absolute;
+  bottom: 0px;
+  width: 100%;
+  padding: 25px 0px;  
+  background-color: black;
+  text-align: center;
+  font-size: 20px;
+  color: rgb(255, 72, 0);
+`;
+
+const empty = css`
+  height: 300px;
+  line-height: 300px;
+  text-align: center;
+`
 /*
     카트 뷰
 */
-function Cart() {
+function Cart() {  
 
-  const computedPrice: number = useAppSelector(selectComputedPrice);
+  const { datas: cartList }  = useAppSelector(selectCart);
+  const finalPrice: number = useAppSelector(selectCouponApplyPrice);
 
   return (
     <>
       <Header title="cart" back={"/products"}/>
       <section css={cartSection} aria-label="cart-view">
-        <CartList />
-        <div>
-          상품 금액 { addComma(computedPrice) }
-        </div>
-        <div>
-          <div>
-            적용 가능한 쿠폰 리스트
+        {
+          cartList.length > 0 ?
+          <>
+            <CartList />
+            <CouponList />
+            <div css={priceStyle}>
+              {`${addComma(finalPrice)}원 결제하기`}
+            </div>
+          </>
+          :
+          <div css={empty}>
+            장바구니가 비었습니다.
           </div>
-          <CouponList />
-        </div>
-        <div>
-          최종 결재 금액
-        </div>
+        }
+
       </section>
     </>
   );

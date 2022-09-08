@@ -7,10 +7,16 @@ import { useQuery } from "@tanstack/react-query";
 import CouponItem from "./couponItem";
 
 const couponListStyle = css`
+  padding: 0px 20px;
+  h2 {
+      margin-bottom: 12px;
+  }
   ul {
     display: flex;
     flex-direction: column;
-  }
+    padding-bottom: 12px;
+    border-bottom: 1px solid rgb(0, 0, 0);
+  }    
 `;
 
 /*
@@ -26,6 +32,7 @@ function CouponList() {
 
   return (
     <div css={couponListStyle} aria-label="cart-list">
+      <h2>Coupons</h2>
       <ul>
         {coupons?.map((data: couponType, idx: number) => {
           return <CouponItem key={idx} id={`coupon_${idx}`} data={data} />;
