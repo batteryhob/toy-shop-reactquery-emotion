@@ -4,8 +4,10 @@ import { productItemType } from "../../../types/products.types";
 import { css } from "@emotion/react";
 
 import { addComma } from "../../../utils/textUtils";
-import { addCart } from "../../../features/cart/cartSlice";
+import { toggleCart, selectCart } from "../../../features/cart/cartSlice";
 import { useDispatch } from "react-redux";
+import { useAppSelector } from "../../../app/hooks";
+import { cartItemType } from "../../../types/carts.types";
 
 const productItemStyle = css`
     width: calc(50% - 1px);
@@ -83,9 +85,15 @@ function ProductItem({ data }: ProductItemProp) {
 
     const dispatch = useDispatch();
 
+    const { datas: cartList }  = useAppSelector(selectCart);
+
     function handleClick(item: any){
-        dispatch(addCart(item));
+        dispatch(toggleCart(item));
     }
+
+    const included: boolean = cartList.findIndex((cart: cartItemType)=>{
+        return cart.product.item_no === data.item_no;
+    }) > -1 ? true : false; 
 
     return (
         <li css={productItemStyle}>
@@ -97,7 +105,7 @@ function ProductItem({ data }: ProductItemProp) {
                     <h3>{data.item_name}</h3>
                     <strong>{`${addComma(data.price)}원`}</strong>
                 </div>
-                <div css={contentIcon(true)}>
+                <div css={contentIcon(included)}>
                     <button onClick={()=> handleClick(data)}>
                         <i></i>
                     </button>                   

@@ -10,12 +10,22 @@ const headerStyle = css`
     justify-content: space-between;
     align-items: center;
     padding: 20px;
+`
+const titleWrapper = css`
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    button {
+      img {
+        height: 30px;
+      }
+    }
     h1 {
         text-transform: capitalize;
     }
 `
 
-const cartDiv = (isAdded: boolean ) => css`
+const cartDiv = () => css`
   button {
     position: relative;
     i {
@@ -48,8 +58,9 @@ const cartDiv = (isAdded: boolean ) => css`
 */
 interface HeaderProps{
     title: string;
+    back?: string
 }
-function Header({ title }: HeaderProps ) {
+function Header({ title, back }: HeaderProps ) {
 
   const navigate = useNavigate();
 
@@ -58,13 +69,27 @@ function Header({ title }: HeaderProps ) {
   function handleClick(){
     navigate("/cart");
   }
+  function handleHistoryBack(){
+    if(back)
+      navigate(back);
+  }
 
   return (
     <>
         <header>
           <div css={headerStyle}>
-            <h1>{ title }</h1>
-            <div css={cartDiv(true)}>
+            <div css={titleWrapper}>
+              {
+                back &&
+                <button onClick={handleHistoryBack}>
+                  <img src="/imgs/chevron_left.svg" alt="뒤로가기" />
+                </button>
+              }  
+              <h1>          
+                { title }
+              </h1>
+            </div>
+            <div css={cartDiv()}>
               <button onClick={handleClick}>
                 <i></i>
                 {

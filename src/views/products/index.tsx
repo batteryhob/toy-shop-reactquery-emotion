@@ -25,14 +25,16 @@ function Products() {
   );
 
   const target = useRef<HTMLDivElement>(null);
-
+  
+  //새로운 product가 추가될 때,
   useEffect(()=>{
     if(products && products.length > 0){
       setComputedList([
         ...computedList,
         ...products
       ])
-    }    
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   },[products]);
 
   //computedList가 변경될 때,
@@ -40,6 +42,7 @@ function Products() {
     const observer = new IntersectionObserver(intersect, { threshold: 1});
     if(target.current)
       observer.observe(target.current);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   },[computedList]);
 
   const intersect = async ([entry]: any, observer: { unobserve: (arg0: any) => void; observe: (arg0: any) => void; }) => {

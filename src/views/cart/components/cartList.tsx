@@ -1,9 +1,10 @@
 /** @jsxImportSource @emotion/react */
 import CartItem from "./cartIem";
 
-import { productItemType } from "../../../types/products.types";
-
 import { css } from "@emotion/react";
+import { selectCart } from "../../../features/cart/cartSlice";
+import { useAppSelector } from "../../../app/hooks";
+import { cartItemType } from "../../../types/carts.types";
 
 const cartListStyle = css`
     padding: 0px 20px;
@@ -16,18 +17,17 @@ const cartListStyle = css`
 /*
     카트 리스트
 */
-interface CartListProps {
-    datas?: Array<productItemType>
-}
-function CartList({ datas } : CartListProps) {
+function CartList() {
+
+    const { datas: cartList }  = useAppSelector(selectCart);
 
     return (
         <div css={cartListStyle} aria-label="cart-list">
             <ul >
                 {
-                    datas?.map((data: productItemType, idx: number)=>{
+                    cartList?.map((data: cartItemType, idx: number)=>{
                         return (
-                            <CartItem  key={idx} data={data}/>
+                            <CartItem key={idx} data={data} />
                         )
                     })
                 }
