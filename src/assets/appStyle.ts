@@ -11,11 +11,15 @@ const appStyle = css`
   header {
     position: relative;
     width: 100%;
+    min-width: 375px;
+    max-width: 640px;
   }
   section {
     position: relative;
     width: 100%;
     height: 100%;
+    min-width: 375px;
+    max-width: 640px;
   }
 `;
 
