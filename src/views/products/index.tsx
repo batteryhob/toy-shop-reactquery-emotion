@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { useQuery } from "@tanstack/react-query";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import ProductList from "./components/productList";
 
@@ -14,27 +14,57 @@ import Header from "../../shared/header";
     프로덕트 뷰
 */
 function Products() {
+  const [page, setPage] = useState<number>(1);
+  const [computedList, setComputedList] = useState<Array<productItemType>>([]);
 
-    const [ page, setPage ] = useState<number>(0);
-
-    const { isLoading, data: products } = useQuery<Array<productItemType>>(['products', page], () => {
+  const { isSuccess, data: products } = useQuery<Array<productItemType>>(
+    ["products", page],
+    () => {
       return createClient().Products.getList(page);
-    });
+    }
+  );
 
-    return (
-      <>
-        <Header title="products"/>
-        <section css={productSection} aria-label="product-view">
-          {
-            isLoading ?
-            <>loadding...</>
-            : <ProductList datas={products}/>
-          }          
-        </section>
-      </>
-    );
+  const target = useRef<HTMLDivElement>(null);
 
+  useEffect(()=>{
+    if(products && products.length > 0){
+      setComputedList([
+        ...computedList,
+        ...products
+      ])
+    }    
+  },[products]);
+
+  //computedList가 변경될 때,
+  useEffect(()=>{
+    const observer = new IntersectionObserver(intersect, { threshold: 1});
+    if(target.current)
+      observer.observe(target.current);
+  },[computedList]);
+
+  const intersect = async ([entry]: any, observer: { unobserve: (arg0: any) => void; observe: (arg0: any) => void; }) => {
+    if (entry.isIntersecting) {
+      observer.unobserve(entry.target);
+      loadMore();
+    }
+  };
+
+  function loadMore() {
+    setPage(page + 1);
   }
-  
-  export default Products;
-  
+
+  return (
+    <>
+      <Header title="products" />
+      <section css={productSection} aria-label="product-view">
+        <ProductList datas={computedList} />
+        {
+          isSuccess &&
+          <div ref={target}></div>
+        }        
+      </section>      
+    </>
+  );
+}
+
+export default Products;

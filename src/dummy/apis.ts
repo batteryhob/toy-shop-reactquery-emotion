@@ -13,10 +13,19 @@ const createClient = function () {
 };
 
 const Products = {
-  getList: function (page: number) {
+  getList: function (page: number = 1, limit: number = 5, sortby: string = 'score')  {
     return new Promise<Array<productItemType>>((resolve, reject) => {
       try {
-        resolve(productItems);
+
+        //페이지네이션
+        const skip = (page - 1) * limit;
+        let tempItems = [...productItems]
+        tempItems.sort((a: any,b: any)=>{
+          return b[sortby] - a[sortby];
+        });
+        const rtnItems = tempItems.slice(skip, skip + limit);
+        resolve(rtnItems);
+
       } catch {
         reject([]);
       }
